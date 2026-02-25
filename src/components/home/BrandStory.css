@@ -1,0 +1,150 @@
+/* ==============================
+   BRAND STORY SECTION
+   ============================== */
+.story-section {
+  background: var(--night);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 500px;
+}
+
+.story-visual {
+  background: linear-gradient(135deg, #2A1810 0%, #4A2018 50%, #2A1208 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.story-visual::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(201, 169, 110, 0.15);
+  border-radius: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation: rotateSlow 20s linear infinite;
+}
+
+.story-visual::after {
+  content: '';
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(201, 169, 110, 0.08);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: rotateSlow 30s linear infinite reverse;
+}
+
+.story-visual-inner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.story-visual-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.story-visual-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--brass);
+  letter-spacing: 0.2em;
+}
+
+.story-content {
+  padding: 5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.story-tag {
+  font-size: 0.55rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 1.5rem;
+}
+
+.story-heading {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 300;
+  color: var(--parchment);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.story-heading em {
+  font-style: italic;
+  color: var(--brass);
+}
+
+.story-body {
+  font-size: 0.75rem;
+  line-height: 2;
+  color: var(--oak);
+  margin-bottom: 2rem;
+  letter-spacing: 0.03em;
+}
+
+.story-founders {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #2A231A;
+}
+
+.founder-item {
+  text-align: center;
+}
+
+.founder-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--parchment);
+  margin-bottom: 0.2rem;
+}
+
+.founder-role {
+  font-size: 0.5rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--oak);
+}
+
+@media (max-width: 1024px) {
+  .story-section {
+    grid-template-columns: 1fr;
+  }
+
+  .story-visual {
+    min-height: 300px;
+  }
+
+  .story-content {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .story-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .story-heading {
+    font-size: 1.8rem;
+  }
+}

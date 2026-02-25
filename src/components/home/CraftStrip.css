@@ -1,0 +1,141 @@
+/* ==============================
+   CRAFTSMANSHIP STRIP
+   ============================== */
+.craft-strip {
+  background: var(--parchment);
+  padding: 5rem 4rem;
+}
+
+.craft-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.craft-item {
+  text-align: center;
+  padding: 2rem 1rem;
+  border: 1px solid rgba(124, 58, 45, 0.1);
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.craft-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--cognac);
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+
+.craft-item:hover::before {
+  transform: translateY(0);
+}
+
+.craft-item:hover .craft-icon,
+.craft-item:hover .craft-name,
+.craft-item:hover .craft-desc {
+  position: relative;
+  z-index: 1;
+}
+
+.craft-item:hover .craft-icon {
+  filter: brightness(0) invert(1);
+}
+
+.craft-item:hover .craft-name {
+  color: var(--parchment);
+}
+
+.craft-item:hover .craft-desc {
+  color: rgba(245, 236, 215, 0.7);
+}
+
+.craft-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  display: block;
+  position: relative;
+  z-index: 1;
+  transition: filter var(--transition);
+}
+
+.craft-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--night);
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+  transition: color var(--transition);
+}
+
+.craft-desc {
+  font-size: 0.62rem;
+  color: var(--oak);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+  transition: color var(--transition);
+}
+
+.section-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--cognac);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.section-tag::before,
+.section-tag::after {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.4;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  color: var(--night);
+  line-height: 1.15;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--cognac);
+}
+
+@media (max-width: 1024px) {
+  .craft-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .craft-strip {
+    padding: 3rem 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .craft-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .craft-item {
+    padding: 1.5rem 1rem;
+  }
+}

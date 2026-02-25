@@ -1,0 +1,72 @@
+.btn {
+  font-family: var(--font-body);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--cognac);
+  color: var(--parchment);
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-body);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background: var(--sienna);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(124, 58, 45, 0.35);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--brass);
+  padding: 0.9rem 2.2rem;
+  border: 1px solid var(--brass);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-size: 0.58rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 500;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: var(--brass);
+  color: var(--night);
+}
+
+.btn-outline:hover {
+  background: var(--brass);
+  color: var(--night);
+}
+
+.btn-add-cart {
+  background: var(--night);
+  color: var(--brass);
+  padding: 0.6rem 1rem;
+  font-size: 0.5rem;
+}
+
+.btn-add-cart:hover {
+  background: var(--cognac);
+  color: var(--parchment);
+}
