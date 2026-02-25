@@ -1,18 +1,35 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '@/lib/context';
-import './Navbar.css';
 import CartDrawer from '../product/CartDrawer';
+import './Navbar.css';
 
 export default function Navbar() {
   const { cartOpen, setCartOpen, cartItems } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [announcementHidden, setAnnouncementHidden] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // When announcement bar is hidden (scrolled down more than 50px), navbar moves up
+      if (window.scrollY > 50) {
+        setAnnouncementHidden(true);
+      } else {
+        setAnnouncementHidden(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
-      <nav className="nav">
+      <nav className={`nav ${announcementHidden ? 'compact' : ''}`}>
         <Link href="/" className="nav-logo">
           ZEEM<span>R</span>A
         </Link>
@@ -94,7 +111,13 @@ export default function Navbar() {
         </ul>
 
         <div className="nav-actions">
-          <button className="nav-icon-btn" title="Search">🔍</button>
+          <button 
+            className="nav-icon-btn" 
+            title="Search"
+            onClick={() => setSearchOpen(!searchOpen)}
+          >
+            🔍
+          </button>
           <button className="nav-icon-btn">♡</button>
           <button className="nav-icon-btn" onClick={() => setCartOpen(!cartOpen)}>
             🛍
@@ -110,6 +133,26 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
+
+      {/* Search Bar */}
+      {searchOpen && (
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            autoFocus
+            className="search-input"
+          />
+          <button 
+            className="search-close"
+            onClick={() => setSearchOpen(false)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       <CartDrawer />
     </>

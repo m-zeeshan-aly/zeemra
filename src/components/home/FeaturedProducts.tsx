@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
 import { products } from '@/lib/dummy-data';
 import './FeaturedProducts.css';
 
 export default function FeaturedProducts() {
+  const { addToCart, setCartOpen } = useApp();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [activeFilter, setActiveFilter] = useState('all');
 
@@ -23,6 +25,18 @@ export default function FeaturedProducts() {
         )
       );
     }
+  };
+
+  const handleAddToCart = (product: typeof products[0]) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      emoji: product.emoji,
+      size: 'M',
+      color: 'Default',
+    });
+    setCartOpen(true);
   };
 
   return (
@@ -75,7 +89,11 @@ export default function FeaturedProducts() {
 
       <div className="products-grid">
         {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard 
+            key={product.id} 
+            product={product}
+            onAddToCart={handleAddToCart}
+          />
         ))}
       </div>
     </section>

@@ -1,0 +1,136 @@
+/* ==============================
+   COLLECTION PAGE
+   ============================== */
+
+.collection-page {
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+.collection-hero {
+  background: linear-gradient(135deg, #2A1810 0%, #1C1410 100%);
+  color: var(--parchment);
+  padding: 4rem 4rem;
+  text-align: center;
+  border-bottom: 1px solid #3A2820;
+}
+
+.collection-title {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.collection-subtitle {
+  font-size: 1rem;
+  color: var(--brass-lt);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==============================
+   FILTERS
+   ============================== */
+
+.collection-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.collection-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.7rem 1.5rem;
+  background: transparent;
+  border: 1px solid #2A231A;
+  color: var(--night);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition);
+  border-radius: 2px;
+}
+
+.filter-btn:hover {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.filter-btn.active {
+  background: var(--cognac);
+  color: white;
+  border-color: var(--cognac);
+}
+
+/* ==============================
+   PRODUCTS GRID
+   ============================== */
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.no-products {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem;
+  color: var(--oak);
+  font-size: 1.1rem;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 1024px) {
+  .collection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .collection-hero {
+    padding: 3rem 2rem;
+  }
+
+  .collection-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .collection-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .collection-hero {
+    padding: 2rem 1.5rem;
+  }
+
+  .collection-title {
+    font-size: 1.5rem;
+  }
+
+  .collection-filters {
+    gap: 0.5rem;
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+  }
+}
