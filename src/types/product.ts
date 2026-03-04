@@ -8,6 +8,7 @@ export type Product = {
   originalPrice?: number;
   origin: string;
   leather: string;
+  imageUrl: string;
   emoji: string;
   badge?: 'Bestseller' | 'New' | 'Sale';
   rating: number;

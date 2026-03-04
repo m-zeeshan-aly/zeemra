@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
 import { products } from '@/lib/dummy-data';
@@ -8,23 +8,30 @@ import './FeaturedProducts.css';
 
 export default function FeaturedProducts() {
   const { addToCart, setCartOpen } = useApp();
-  const [filteredProducts, setFilteredProducts] = useState(products);
   const [activeFilter, setActiveFilter] = useState('all');
+
+  // Compute filtered products based on activeFilter
+  // This ensures single source of truth
+  const filteredProducts = useMemo(() => {
+    console.log('🔄 Filtering:', activeFilter);
+    console.log('📦 Total products available:', products.length);
+    
+    let result = [];
+    if (activeFilter === 'all') {
+      result = products;
+    } else if (activeFilter === 'men' || activeFilter === 'women') {
+      result = products.filter((p) => p.gender === activeFilter);
+    } else {
+      // Filter by type (jacket, wallet, shoe, belt, bag)
+      result = products.filter((p) => p.type === activeFilter);
+    }
+    
+    console.log(`✅ Filtered result for "${activeFilter}":`, result.length, 'products');
+    return result;
+  }, [activeFilter]);
 
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
-    if (filter === 'all') {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter(
-          (p) =>
-            p.gender === filter ||
-            p.type === filter ||
-            p.category.toLowerCase().includes(filter)
-        )
-      );
-    }
   };
 
   const handleAddToCart = (product: typeof products[0]) => {
