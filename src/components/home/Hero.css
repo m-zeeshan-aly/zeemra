@@ -1,14 +1,12 @@
 /* Hero Section */
 .hero {
-  height: calc(100vh - 100px);
+  height: 100vh;
   min-height: 600px;
   background: var(--night);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
-  margin-top: -100px;
-  padding-top: 100px;
 }
 
 .hero-bg {

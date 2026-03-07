@@ -17,7 +17,7 @@ export default function HomePage() {
   useScrollReveal();
 
   return (
-    <>
+    <div style={{ paddingTop: '100px' }}>
       <Hero />
       <Categories />
       <FeaturedSection />
@@ -29,6 +29,6 @@ export default function HomePage() {
       <CraftStrip />
       <Testimonials />
       <Newsletter />
-    </>
+    </div>
   );
 }

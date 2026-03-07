@@ -15,7 +15,7 @@ body {
   font-weight: 300;
   cursor: none;
   overflow-x: hidden;
-  padding-top: 100px;
+  padding-top: 0;
 }
 
 a {
@@ -151,3 +151,8 @@ body::after {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ==============================
+   PAGE-SPECIFIC SPACING
+   ============================== */
+/* No global page wrapper needed - each page handles its own spacing */
