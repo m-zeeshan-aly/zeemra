@@ -1,4 +1,4 @@
-import { Product } from '@/types/product';
+import { Product, SectionType } from '@/types/product';
 
 export const products: Product[] = [
   // Men's Jackets (4)
@@ -14,9 +14,13 @@ export const products: Product[] = [
     leather: 'Full-grain',
     imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16ebc5?w=600&h=750&fit=crop&crop=entropy&q=80',
     emoji: '🧥',
-    badge: 'Bestseller',
+    badge: 'Sale',
     rating: 4.9,
     reviews: 128,
+    sections: ['featured', 'selling', 'rated'],
+    rank: 2,
+    ratingNum: 4.9,
+    colors: ['#7C3A2D', '#1C1810', '#5A3020'],
   },
   {
     id: '2',
@@ -32,6 +36,8 @@ export const products: Product[] = [
     badge: 'New',
     rating: 4.8,
     reviews: 94,
+    sections: ['featured', 'new'],
+    colors: ['#7C3A2D', '#C9A96E', '#2A1810'],
   },
   {
     id: '3',
@@ -46,6 +52,8 @@ export const products: Product[] = [
     emoji: '🧥',
     rating: 4.7,
     reviews: 112,
+    sections: ['featured'],
+    colors: ['#1C1810', '#5A3020'],
   },
   {
     id: '4',
@@ -62,6 +70,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.6,
     reviews: 87,
+    sections: ['featured'],
+    colors: ['#1C1810', '#2A1810'],
   },
   // Men's Shoes (4)
   {
@@ -77,6 +87,8 @@ export const products: Product[] = [
     emoji: '👞',
     rating: 4.7,
     reviews: 56,
+    sections: ['featured'],
+    colors: ['#7C3A2D', '#1C1810'],
   },
   {
     id: '6',
@@ -89,9 +101,12 @@ export const products: Product[] = [
     leather: 'Premium',
     imageUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=750&fit=crop&crop=entropy&q=80',
     emoji: '👞',
-    badge: 'Bestseller',
+    badge: 'Hot',
     rating: 4.8,
     reviews: 142,
+    sections: ['featured', 'selling'],
+    rank: 6,
+    colors: ['#7C3A2D', '#1C1810'],
   },
   {
     id: '7',
@@ -106,6 +121,9 @@ export const products: Product[] = [
     emoji: '👞',
     rating: 4.9,
     reviews: 128,
+    sections: ['featured', 'rated'],
+    ratingNum: 4.8,
+    colors: ['#7C3A2D', '#1C1810'],
   },
   {
     id: '8',
@@ -122,6 +140,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.5,
     reviews: 73,
+    sections: ['featured'],
+    colors: ['#1C1810', '#5A3020'],
   },
   // Men's Wallets (3)
   {
@@ -137,6 +157,8 @@ export const products: Product[] = [
     emoji: '👛',
     rating: 4.8,
     reviews: 85,
+    sections: ['featured'],
+    colors: ['#1C1810', '#5A3020'],
   },
   {
     id: '10',
@@ -152,6 +174,8 @@ export const products: Product[] = [
     badge: 'New',
     rating: 4.9,
     reviews: 67,
+    sections: ['featured', 'new'],
+    colors: ['#1C1810', '#7C3A2D'],
   },
   {
     id: '11',
@@ -168,6 +192,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.6,
     reviews: 54,
+    sections: ['featured'],
+    colors: ['#7C3A2D', '#1C1810'],
   },
   // Men's Belts (2)
   {
@@ -183,6 +209,9 @@ export const products: Product[] = [
     emoji: '👔',
     rating: 4.9,
     reviews: 124,
+    sections: ['featured', 'rated'],
+    ratingNum: 4.9,
+    colors: ['#1C1810', '#3A2010'],
   },
   {
     id: '13',
@@ -195,9 +224,12 @@ export const products: Product[] = [
     leather: 'Vegetable-tanned',
     imageUrl: 'https://images.unsplash.com/photo-1624526267942-ab67cb38d042?w=600&h=750&fit=crop&crop=entropy&q=80',
     emoji: '👔',
-    badge: 'Bestseller',
+    badge: 'Hot',
     rating: 4.7,
     reviews: 98,
+    sections: ['featured', 'selling'],
+    rank: 4,
+    colors: ['#1C1810', '#3A2010'],
   },
   // Women's Jackets (4)
   {
@@ -215,6 +247,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.8,
     reviews: 73,
+    sections: ['featured', 'new'],
+    colors: ['#7C3A2D', '#5A2820', '#C9A96E'],
   },
   {
     id: '15',
@@ -230,6 +264,9 @@ export const products: Product[] = [
     badge: 'New',
     rating: 4.9,
     reviews: 101,
+    sections: ['featured', 'new', 'rated'],
+    ratingNum: 4.9,
+    colors: ['#8A7060', '#C9A96E'],
   },
   {
     id: '16',
@@ -244,6 +281,8 @@ export const products: Product[] = [
     emoji: '🧥',
     rating: 4.7,
     reviews: 82,
+    sections: ['featured'],
+    colors: ['#1C1810', '#2A1810'],
   },
   {
     id: '17',
@@ -256,9 +295,13 @@ export const products: Product[] = [
     leather: 'Full-grain',
     imageUrl: 'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=750&fit=crop&crop=entropy&q=80',
     emoji: '🧥',
-    badge: 'Bestseller',
+    badge: 'Hot',
     rating: 4.9,
     reviews: 156,
+    sections: ['featured', 'selling', 'rated'],
+    rank: 5,
+    ratingNum: 4.9,
+    colors: ['#7C3A2D', '#C9A96E'],
   },
   // Women's Shoes (4)
   {
@@ -274,6 +317,8 @@ export const products: Product[] = [
     emoji: '👠',
     rating: 4.6,
     reviews: 38,
+    sections: ['featured'],
+    colors: ['#7C3A2D', '#1C1810'],
   },
   {
     id: '19',
@@ -289,6 +334,8 @@ export const products: Product[] = [
     badge: 'New',
     rating: 4.8,
     reviews: 64,
+    sections: ['featured', 'new'],
+    colors: ['#1C1810', '#7C3A2D'],
   },
   {
     id: '20',
@@ -305,6 +352,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.7,
     reviews: 51,
+    sections: ['featured'],
+    colors: ['#7C3A2D', '#C9A96E', '#1C1810'],
   },
   {
     id: '21',
@@ -317,9 +366,12 @@ export const products: Product[] = [
     leather: 'Soft',
     imageUrl: 'https://images.unsplash.com/photo-1543163521-9efcc06b9005?w=600&h=750&fit=crop&crop=entropy&q=80',
     emoji: '👠',
-    badge: 'Bestseller',
+    badge: 'Hot',
     rating: 4.9,
     reviews: 119,
+    sections: ['featured', 'selling'],
+    rank: 3,
+    colors: ['#7C3A2D', '#C9A96E', '#1C1810'],
   },
   // Women's Wallets (3)
   {
@@ -336,6 +388,8 @@ export const products: Product[] = [
     badge: 'New',
     rating: 4.8,
     reviews: 52,
+    sections: ['featured', 'new'],
+    colors: ['#7C3A2D', '#C9A96E'],
   },
   {
     id: '23',
@@ -350,6 +404,9 @@ export const products: Product[] = [
     emoji: '💼',
     rating: 4.9,
     reviews: 78,
+    sections: ['featured', 'rated'],
+    ratingNum: 4.8,
+    colors: ['#7C3A2D', '#C9A96E'],
   },
   {
     id: '24',
@@ -366,6 +423,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.6,
     reviews: 43,
+    sections: ['featured'],
+    colors: ['#7C3A2D', '#C9A96E'],
   },
   // Women's Bags (4)
   {
@@ -382,6 +441,8 @@ export const products: Product[] = [
     badge: 'New',
     rating: 4.9,
     reviews: 42,
+    sections: ['featured', 'new'],
+    colors: ['#7C3A2D', '#C9A96E'],
   },
   {
     id: '26',
@@ -394,9 +455,12 @@ export const products: Product[] = [
     leather: 'Full-grain',
     imageUrl: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=750&fit=crop&crop=entropy&q=80',
     emoji: '👜',
-    badge: 'Bestseller',
+    badge: 'Hot',
     rating: 4.9,
     reviews: 134,
+    sections: ['featured', 'selling'],
+    rank: 1,
+    colors: ['#7C3A2D', '#5A2820', '#C9A96E'],
   },
   {
     id: '27',
@@ -413,6 +477,8 @@ export const products: Product[] = [
     badge: 'Sale',
     rating: 4.7,
     reviews: 89,
+    sections: ['featured'],
+    colors: ['#C9A96E', '#7C3A2D'],
   },
   {
     id: '28',
@@ -427,5 +493,42 @@ export const products: Product[] = [
     emoji: '👜',
     rating: 4.8,
     reviews: 76,
+    sections: ['featured', 'rated'],
+    ratingNum: 4.8,
+    colors: ['#7C3A2D', '#C9A96E'],
   },
 ];
+
+// Helper functions for fetching products by section
+export function getProductsBySection(sectionId: SectionType): Product[] {
+  return products.filter(
+    (p) => p.sections && p.sections.includes(sectionId)
+  );
+}
+
+export function getNewArrivals(): Product[] {
+  return products
+    .filter((p) => p.badge === 'New')
+    .sort((a, b) => b.reviews - a.reviews)
+    .slice(0, 12);
+}
+
+export function getTopSelling(): Product[] {
+  return products
+    .filter((p) => p.rank !== undefined)
+    .sort((a, b) => (a.rank || 0) - (b.rank || 0))
+    .slice(0, 8);
+}
+
+export function getTopRated(): Product[] {
+  return products
+    .filter((p) => p.ratingNum !== undefined && p.ratingNum >= 4.8)
+    .sort((a, b) => (b.ratingNum || 0) - (a.ratingNum || 0))
+    .slice(0, 12);
+}
+
+export function getExclusive(): Product[] {
+  return products
+    .filter((p) => p.isLimited === true)
+    .slice(0, 12);
+}
