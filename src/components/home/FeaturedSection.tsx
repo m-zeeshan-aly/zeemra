@@ -23,6 +23,7 @@ export default function FeaturedSection() {
       ]}
       backgroundStyle="light"
       showExpand={true}
+      pageUrl="/shop/featured"
     />
   );
 }

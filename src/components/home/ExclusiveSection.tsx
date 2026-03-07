@@ -24,6 +24,7 @@ export default function ExclusiveSection() {
       ]}
       backgroundStyle="accent"
       showExpand={true}
+      pageUrl="/shop/exclusive"
     />
   );
 }

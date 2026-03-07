@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { Product, SectionType } from '@/types/product';
 import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
@@ -15,10 +16,12 @@ interface ProductSectionProps {
   filters: Array<{ label: string; value: string }>;
   backgroundStyle?: 'light' | 'dark' | 'accent';
   showExpand?: boolean;
+  pageUrl: string; // URL for View All
 }
 
-const CARDS_PER_ROW = 4;
+const ITEMS_PER_ROW = 4;
 const EXPANDED_ROWS = 2;
+const EXPANDED_ITEMS = ITEMS_PER_ROW * EXPANDED_ROWS; // 8
 
 // Helper function to parse title with <em> tags
 function parseTitleWithEmphasis(title: string) {
@@ -50,7 +53,9 @@ export default function ProductSection({
   filters,
   backgroundStyle = 'light',
   showExpand = true,
+  pageUrl,
 }: ProductSectionProps) {
+  const router = useRouter();
   const { addToCart, setCartOpen } = useApp();
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(0);
@@ -69,10 +74,10 @@ export default function ProductSection({
     });
   }, [activeFilter, products]);
 
-  const itemsPerPage = CARDS_PER_ROW;
-  const expandedItemsLimit = CARDS_PER_ROW * EXPANDED_ROWS;
+  // Calculate pagination
+  const itemsPerPage = ITEMS_PER_ROW;
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-
+  
   // Clamp current page
   if (currentPage >= totalPages && totalPages > 0) {
     const newPage = Math.max(0, totalPages - 1);
@@ -81,13 +86,16 @@ export default function ProductSection({
     }
   }
 
+  // Get visible products
   const visibleProducts = useMemo(() => {
     if (isExpanded) {
-      return filteredProducts; // Show ALL products when expanded
+      // Show 8 products (2 rows of 4)
+      return filteredProducts.slice(0, EXPANDED_ITEMS);
     }
+    // Show 4 products (1 row) for current page
     const start = currentPage * itemsPerPage;
     return filteredProducts.slice(start, start + itemsPerPage);
-  }, [filteredProducts, currentPage, isExpanded, itemsPerPage]);
+  }, [filteredProducts, currentPage, isExpanded]);
 
   const handleAddToCart = (product: Product) => {
     addToCart({
@@ -115,11 +123,7 @@ export default function ProductSection({
     setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1));
   };
 
-  const goToPage = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const hasMoreProducts = filteredProducts.length > expandedItemsLimit;
+  const hasMoreProducts = filteredProducts.length > EXPANDED_ITEMS;
 
   return (
     <section className={`product-section product-section--${sectionId} product-section--${backgroundStyle}`}>
@@ -144,19 +148,22 @@ export default function ProductSection({
         ))}
       </div>
 
-      {/* Products Grid / Carousel */}
+      {/* Products Grid with Carousel */}
       <div className={`products-grid-wrapper ${isExpanded ? 'expanded' : 'carousel'}`}>
+        {/* Previous Arrow - Hide when expanded */}
         {!isExpanded && (
           <button
             className="carousel-nav carousel-nav--prev"
             onClick={goToPreviousPage}
             disabled={currentPage === 0}
             aria-label="Previous page"
+            title="Previous products"
           >
             ←
           </button>
         )}
 
+        {/* Products Grid */}
         <div className="products-grid">
           {visibleProducts.map((product) => (
             <ProductCard
@@ -167,26 +174,28 @@ export default function ProductSection({
           ))}
         </div>
 
+        {/* Next Arrow - Hide when expanded */}
         {!isExpanded && (
           <button
             className="carousel-nav carousel-nav--next"
             onClick={goToNextPage}
             disabled={currentPage >= totalPages - 1}
             aria-label="Next page"
+            title="Next products"
           >
             →
           </button>
         )}
       </div>
 
-      {/* Pagination Dots */}
+      {/* Pagination Dots - Hide when expanded */}
       {!isExpanded && totalPages > 1 && (
         <div className="pagination-dots">
           {Array.from({ length: totalPages }).map((_, index) => (
             <button
               key={index}
               className={`dot ${index === currentPage ? 'active' : ''}`}
-              onClick={() => goToPage(index)}
+              onClick={() => setCurrentPage(index)}
               aria-label={`Go to page ${index + 1}`}
             />
           ))}
@@ -204,20 +213,27 @@ export default function ProductSection({
                 setCurrentPage(0);
               }}
             >
-              ↑ Show Less
+              ↑ Collapse
             </button>
           )}
+          
           {!isExpanded && hasMoreProducts && (
             <button
               className="action-btn action-btn--primary"
-              onClick={() => {
-                setIsExpanded(true);
-                setCurrentPage(0);
-              }}
+              onClick={() => setIsExpanded(true)}
             >
-              Expand · Show All Products ↓
+              Expand · Show 2 Rows ↓
             </button>
           )}
+          
+          {/* View All Button */}
+          <button
+            className="action-btn action-btn--tertiary"
+            onClick={() => router.push(pageUrl)}
+            title={`View all ${sectionTag} products`}
+          >
+            View All Products →
+          </button>
         </div>
       )}
     </section>

@@ -333,6 +333,27 @@
   border-color: var(--charcoal);
 }
 
+.action-btn--tertiary {
+  background: none;
+  border: 1px solid var(--cognac);
+  color: var(--cognac);
+  padding: 0.65rem 1.8rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all var(--transition);
+  border-radius: 0;
+}
+
+.action-btn--tertiary:hover {
+  background: var(--cognac);
+  border-color: var(--cognac);
+  color: var(--parchment);
+}
+
 .product-section--selling .action-btn {
   border-color: #3A3028;
   color: var(--brass-lt);
@@ -347,6 +368,16 @@
   background: var(--cognac);
   border-color: var(--cognac);
   color: var(--parchment);
+}
+
+.product-section--selling .action-btn--tertiary {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.product-section--selling .action-btn--tertiary:hover {
+  background: var(--brass);
+  color: var(--night);
 }
 
 .product-section--exclusive .action-btn {
@@ -368,6 +399,16 @@
 .product-section--exclusive .action-btn--primary:hover {
   background: var(--brass-lt);
   border-color: var(--brass-lt);
+}
+
+.product-section--exclusive .action-btn--tertiary {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.product-section--exclusive .action-btn--tertiary:hover {
+  background: var(--brass);
+  color: var(--night);
 }
 
 /* Responsive */

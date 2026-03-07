@@ -20,6 +20,7 @@ export default function TopRatedSection() {
       ]}
       backgroundStyle="light"
       showExpand={true}
+      pageUrl="/shop/top-rated"
     />
   );
 }

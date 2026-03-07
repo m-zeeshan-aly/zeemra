@@ -20,6 +20,7 @@ export default function NewArrivalsSection() {
       ]}
       backgroundStyle="light"
       showExpand={true}
+      pageUrl="/shop/new-arrivals"
     />
   );
 }
