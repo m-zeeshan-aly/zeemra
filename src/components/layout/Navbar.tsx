@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, ChangeEvent } from 'react';
+import DOMPurify from 'dompurify';
 import { useApp } from '@/lib/context';
 import CartDrawer from '../product/CartDrawer';
 import './Navbar.css';
@@ -24,18 +25,27 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [announcementHidden, setAnnouncementHidden] = useState(false);
 
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+
   useEffect(() => {
     const handleScroll = () => {
-      // When announcement bar is hidden (scrolled down more than 50px), navbar moves up
-      if (window.scrollY > 50) {
-        setAnnouncementHidden(true);
-      } else {
-        setAnnouncementHidden(false);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
       }
+      scrollTimeout.current = setTimeout(() => {
+        if (window.scrollY > 50) {
+          setAnnouncementHidden(true);
+        } else {
+          setAnnouncementHidden(false);
+        }
+      }, 100);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    };
   }, []);
 
   return (
@@ -165,7 +175,10 @@ export default function Navbar() {
             type="search"
             placeholder="Search products..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              const sanitized = DOMPurify.sanitize(e.target.value, { ALLOWED_TAGS: [] });
+              setSearchQuery(sanitized);
+            }}
             autoFocus
             className="search-input"
             aria-label="Search products"

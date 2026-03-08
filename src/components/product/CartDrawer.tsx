@@ -15,10 +15,10 @@ import './CartDrawer.css';
  * @returns {JSX.Element} Animated drawer UI with cart items and checkout options
  */
 export default function CartDrawer() {
-  const { cartOpen, setCartOpen, cartItems, updateQuantity } = useApp();
+  const { cartOpen, setCartOpen, cartItems, updateQuantity, removeFromCart } = useApp();
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
-  const totalQuantity = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
@@ -51,21 +51,29 @@ export default function CartDrawer() {
                 <div className="cart-item-qty">
                   <button 
                     className="qty-btn" 
-                    onClick={() => updateQuantity(item.id, (item.quantity || 1) - 1)}
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
                   >
                     −
                   </button>
-                  <span className="qty-num">{item.quantity || 1}</span>
+                  <span className="qty-num">{item.quantity}</span>
                   <button 
                     className="qty-btn" 
-                    onClick={() => updateQuantity(item.id, (item.quantity || 1) + 1)}
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
                   >
                     +
+                  </button>
+                  <button 
+                    className="cart-item-remove"
+                    onClick={() => removeFromCart(item.id)}
+                    title="Remove from cart"
+                    aria-label={`Remove ${item.name} from cart`}
+                  >
+                    ✕
                   </button>
                 </div>
               </div>
               <div>
-                <p className="cart-item-price">€{item.price * (item.quantity || 1)}</p>
+                <p className="cart-item-price">€{item.price * item.quantity}</p>
               </div>
             </div>
           ))}

@@ -66,6 +66,21 @@ I've fixed all your issues. Here's a **complete explanation** of how everything 
 
 ---
 
+### **5. Code Quality & Security Enhancements ✅**
+**Problem:** Need for safe cart operations, input security, runtime validation, and stability.
+
+**What I fixed:**
+- **Cart Deduplication**: Added logic to merge duplicate items and increment their quantities in `context.tsx`.
+- **Remove Button**: Added a dedicated delete functionality in `CartDrawer.tsx`.
+- **Input Sanitization**: Implemented `DOMPurify` to ensure search UI is safe from XSS.
+- **Scroll Throttling**: Navbar scroll performance optimized through timeouts.
+- **Runtime Type Validation**: Added `Zod` to fully validate cart data structures and catch API edge cases.
+- **Testing Coverage**: Enhanced `Jest` and `@testing-library/react` configurations.
+- **Error Tracking**: Implemented `@sentry/nextjs` for production-grade error monitoring.
+
+---
+
+
 ## **🏗️ Codebase Architecture**
 
 Let me show you how everything connects:
@@ -356,12 +371,13 @@ The search bar is now showing! Next:
 
 ---
 
-### **Phase 4: Wishlist**
+### **Phase 4: Wishlist (✅ Completed)**
 
-The ♡ button is ready:
-- Track favorited items
-- Show wishlist page
-- Share wishlist
+The ♡ button is now fully functional:
+- Tracks favorited items in AppContext
+- Hook `useWishlist()` triggers the addition/removal of products
+- Persists to `localStorage`
+- Badge dynamically updates
 
 ---
 
@@ -458,9 +474,14 @@ src/
 | Cart not showing | ✅ FIXED | Removed duplicate CartDrawer |
 | Products not showing | ✅ FIXED | Added full product grid to men/women pages |
 | Navbar scrolls away | ✅ FIXED | Changed to `position: fixed` |
-| Search not working | ✅ FIXED | Added search bar with toggle |
-| Add to cart not working | ✅ FIXED | Connected to context hook |
+| Search not working | ✅ FIXED | Added search bar with toggle & `DOMPurify` |
+| Add to cart not working | ✅ FIXED | Connected to context hook with deduplication |
 | Missing CSS files | ✅ FIXED | Created men.css & women.css |
+| Hardcoded Magic CSS | ✅ FIXED | Transferred variables to `variables.css` |
+| Missing Error Handling | ✅ FIXED | Installed `@sentry/nextjs` & `Zod` |
+| Cart Remove Button | ✅ FIXED | Created trash icon in `CartDrawer.tsx` |
+| Quantity Default Bugs | ✅ FIXED | Ensured all cart items initialize to `1` explicitly |
+| Wishlist Feature | ✅ FIXED | Added completely stateful persistence |
 
 ---
 

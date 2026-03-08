@@ -1,5 +1,6 @@
 import { Product } from '@/types/product';
 import { useState } from 'react';
+import { useApp } from '@/lib/context';
 import Image from 'next/image';
 import Link from 'next/link';
 import './ProductCard.css';
@@ -24,7 +25,9 @@ interface ProductCardProps {
  */
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
+  const { wishedItems, addToWishlist, removeFromWishlist } = useApp();
   const productLink = `/product/${product.slug || product.id}`;
+  const isWished = wishedItems?.includes(product.id) || false;
 
   return (
     <Link href={productLink}>
@@ -37,6 +40,8 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
               className="product-img"
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
               onError={() => setImageError(true)}
               priority={false}
             />
@@ -46,7 +51,15 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
             </div>
           )}
           {product.badge && <span className="product-badge">{product.badge}</span>}
-          <button className="product-wish" onClick={(e) => e.preventDefault()}>♡</button>
+          <button 
+            className="product-wish" 
+            onClick={(e) => {
+              e.preventDefault();
+              isWished ? removeFromWishlist(product.id) : addToWishlist(product.id);
+            }}
+          >
+            {isWished ? '❤️' : '♡'}
+          </button>
         </div>
         <div className="product-info">
           <p className="product-category">{product.category}</p>

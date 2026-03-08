@@ -1,6 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
+import DOMPurify from 'dompurify';
 import './Newsletter.css';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -76,7 +77,8 @@ export default function Newsletter() {
             placeholder="Your email address"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value);
+              const sanitized = DOMPurify.sanitize(e.target.value, { ALLOWED_TAGS: [] });
+              setEmail(sanitized);
               if (error) setError('');
             }}
             aria-required="true"

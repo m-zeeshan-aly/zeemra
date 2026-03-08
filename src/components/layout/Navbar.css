@@ -1,6 +1,6 @@
 .nav {
   background: var(--night);
-  padding: 0 3rem;
+  padding: 0 var(--spacing-xl);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,8 +78,8 @@
   background: var(--night);
   border: 1px solid #2A231A;
   border-top: 2px solid var(--brass);
-  padding: 2rem;
-  min-width: 520px;
+  padding: var(--spacing-xl);
+  min-width: var(--max-width-sm);
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s ease;
@@ -226,7 +226,7 @@
   right: 0;
   background: var(--night);
   border-bottom: 1px solid #2A231A;
-  padding: 1rem 3rem;
+  padding: var(--spacing-md) var(--spacing-xl);
   z-index: 999;
   display: flex;
   align-items: center;
