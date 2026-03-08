@@ -43,7 +43,7 @@ export default function Footer() {
         <div>
           <p className="footer-col-title">About</p>
           <ul className="footer-links">
-            <li><Link href="#">Our Story</Link></li>
+            <li><Link href="/about">Our Story</Link></li>
             <li><Link href="#">Sialkot Craft</Link></li>
             <li><Link href="#">Sustainability</Link></li>
             <li><Link href="#">Press</Link></li>

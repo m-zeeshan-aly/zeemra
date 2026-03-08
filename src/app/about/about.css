@@ -1,0 +1,64 @@
+/* ==============================
+   ABOUT PAGE
+   ============================== */
+.about-page { background:var(--cream); padding-top:100px; }
+.about-hero { height:70vh; min-height:500px; background:var(--night); display:flex; align-items:flex-end; padding:5rem 6rem; position:relative; overflow:hidden; }
+.about-hero-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 80% 50%, rgba(124,58,45,0.25), transparent 60%), radial-gradient(ellipse 40% 60% at 20% 80%, rgba(201,169,110,0.06), transparent 50%); }
+.about-hero-content { position:relative; z-index:2; max-width:700px; }
+.about-eyebrow { font-size:0.58rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--brass); margin-bottom:1.5rem; display:flex; align-items:center; gap:1rem; }
+.about-eyebrow::before { content:''; width:30px; height:1px; background:var(--brass); }
+.about-hero-title { font-family:var(--font-display); font-size:clamp(3rem,6vw,5.5rem); font-weight:300; line-height:1.05; color:var(--parchment); }
+.about-hero-title em { font-style:italic; color:var(--brass); display:block; }
+.about-timeline { padding:6rem; background:var(--cream); max-width:900px; margin:0 auto; }
+.timeline-item { display:grid; grid-template-columns:80px 1fr; gap:2rem; margin-bottom:3.5rem; position:relative; }
+.timeline-item:not(:last-child)::after { content:''; position:absolute; left:40px; top:50px; width:1px; height:calc(100% + 2rem); background:linear-gradient(to bottom, var(--brass), transparent); opacity:0.2; }
+.timeline-year { font-family:var(--font-display); font-size:1.8rem; font-weight:300; color:var(--brass); line-height:1; padding-top:0.2rem; text-align:right; }
+.timeline-dot { position:absolute; left:34px; top:8px; width:12px; height:12px; background:var(--cognac); border:2px solid var(--brass); }
+.timeline-content { padding-left:1rem; }
+.timeline-tag { font-size:0.55rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--cognac); margin-bottom:0.5rem; }
+.timeline-heading { font-family:var(--font-display); font-size:1.5rem; font-weight:400; color:var(--night); margin-bottom:0.7rem; }
+.timeline-body { font-size:0.72rem; line-height:1.9; color:var(--oak); letter-spacing:0.03em; }
+.about-values { background:var(--night); padding:6rem 4rem; }
+.values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; max-width:1000px; margin:3rem auto 0; border:1px solid #2A231A; }
+.value-item { padding:3rem 2.5rem; border-right:1px solid #2A231A; transition:background 0.3s; }
+.value-item:last-child { border-right:none; }
+.value-item:hover { background:#1a1410; }
+.value-num { font-family:var(--font-display); font-size:4rem; font-weight:300; color:rgba(201,169,110,0.1); line-height:1; margin-bottom:1rem; }
+.value-icon { font-size:1.5rem; margin-bottom:1rem; display:block; }
+.value-name { font-family:var(--font-display); font-size:1.3rem; font-weight:400; color:var(--parchment); margin-bottom:0.6rem; }
+.value-desc { font-size:0.65rem; line-height:1.8; color:var(--oak); }
+.about-founders { background:var(--parchment); padding:6rem 4rem; text-align:center; }
+.founders-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; max-width:800px; margin:4rem auto 0; }
+.founder-card { background:white; padding:3rem 2rem; border:1px solid rgba(124,58,45,0.1); transition:all 0.3s; }
+.founder-card:hover { box-shadow:0 20px 60px rgba(124,58,45,0.1); transform:translateY(-4px); }
+.founder-avatar-lg { width:90px; height:90px; background:var(--sienna); border-radius:50%; margin:0 auto 1.5rem; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:2.5rem; color:var(--brass); font-weight:300; border:2px solid var(--brass); }
+.founder-card-name { font-family:var(--font-display); font-size:1.8rem; font-weight:300; font-style:italic; color:var(--night); margin-bottom:0.3rem; }
+.founder-card-role { font-size:0.55rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--cognac); margin-bottom:1.2rem; }
+.founder-card-bio { font-size:0.68rem; line-height:1.85; color:var(--oak); }
+.about-atelier { background:var(--sienna); padding:5rem 4rem; }
+.atelier-inner { display:grid; grid-template-columns:1fr 1fr; gap:5rem; max-width:1100px; margin:0 auto; align-items:center; }
+.atelier-visual { background:rgba(0,0,0,0.2); border:1px solid rgba(201,169,110,0.2); padding:3rem; text-align:center; position:relative; }
+.atelier-visual-icon { font-size:5rem; margin-bottom:1rem; }
+.atelier-visual-caption { font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--brass-lt); opacity:0.7; }
+.atelier-text-tag { font-size:0.55rem; letter-spacing:0.5em; text-transform:uppercase; color:var(--brass); margin-bottom:1.5rem; }
+.atelier-heading { font-family:var(--font-display); font-size:2.5rem; font-weight:300; line-height:1.2; color:var(--parchment); margin-bottom:1.5rem; }
+.atelier-heading em { font-style:italic; color:var(--brass); }
+.atelier-body { font-size:0.7rem; line-height:1.9; color:rgba(245,236,215,0.6); }
+.atelier-stats { display:flex; gap:2rem; margin-top:2rem; }
+.atelier-stat-num { font-family:var(--font-display); font-size:2rem; font-weight:300; color:var(--brass); line-height:1; }
+.atelier-stat-label { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:rgba(245,236,215,0.4); margin-top:0.2rem; }
+
+/* ==============================
+   RESPONSIVE — ABOUT PAGE
+   ============================== */
+@media (max-width:1024px) {
+  .founders-grid { grid-template-columns:1fr; max-width:380px; margin: 4rem auto 0;}
+  .values-grid { grid-template-columns:1fr; }
+  .value-item { border-right:none; border-bottom:1px solid #2A231A; }
+  .atelier-inner { grid-template-columns:1fr; gap:2rem; }
+  .about-hero { padding:3rem 2rem; }
+  .about-timeline { padding:4rem 2rem; }
+}
+@media (max-width:640px) {
+  .about-hero { height:auto; min-height:0; padding:3rem 1.5rem; }
+}
