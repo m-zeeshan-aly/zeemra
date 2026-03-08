@@ -6,6 +6,17 @@ import ProductCard from '@/components/product/ProductCard';
 import { products } from '@/lib/dummy-data';
 import './FeaturedProducts.css';
 
+/**
+ * FeaturedProducts component displays a filterable grid of featured/bestselling products.
+ * Supports filtering by gender (men/women) and product type (jacket, wallet, etc).
+ * Uses memoization to optimize performance for expensive filter operations.
+ * 
+ * @component
+ * @example
+ * <FeaturedProducts />
+ * 
+ * @returns {JSX.Element} Featured products section with filter buttons and product grid
+ */
 export default function FeaturedProducts() {
   const { addToCart, setCartOpen } = useApp();
   const [activeFilter, setActiveFilter] = useState('all');
@@ -13,9 +24,6 @@ export default function FeaturedProducts() {
   // Compute filtered products based on activeFilter
   // This ensures single source of truth
   const filteredProducts = useMemo(() => {
-    console.log('🔄 Filtering:', activeFilter);
-    console.log('📦 Total products available:', products.length);
-    
     let result = [];
     if (activeFilter === 'all') {
       result = products;
@@ -26,7 +34,6 @@ export default function FeaturedProducts() {
       result = products.filter((p) => p.type === activeFilter);
     }
     
-    console.log(`✅ Filtered result for "${activeFilter}":`, result.length, 'products');
     return result;
   }, [activeFilter]);
 

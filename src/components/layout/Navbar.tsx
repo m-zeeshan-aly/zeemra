@@ -6,6 +6,17 @@ import { useApp } from '@/lib/context';
 import CartDrawer from '../product/CartDrawer';
 import './Navbar.css';
 
+/**
+ * Navbar is the main fixed navigation bar for the ZEEMRA application.
+ * Includes the brand logo, mega-menu navigation, search bar, wishlist, and cart icon.
+ * Collapses announcement bar offset on scroll; shows mobile hamburger below 1024px.
+ *
+ * @component
+ * @example
+ * <Navbar />
+ *
+ * @returns {JSX.Element} Sticky navigation bar with CartDrawer and search bar
+ */
 export default function Navbar() {
   const { cartOpen, setCartOpen, cartItems } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -29,7 +40,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`nav ${announcementHidden ? 'compact' : ''}`}>
+      <nav className={`nav ${announcementHidden ? 'compact' : ''}`} aria-label="Main navigation">
         <Link href="/" className="nav-logo">
           ZEEM<span>R</span>A
         </Link>
@@ -114,39 +125,54 @@ export default function Navbar() {
           <button 
             className="nav-icon-btn" 
             title="Search"
+            aria-label="Open search"
+            aria-expanded={searchOpen}
             onClick={() => setSearchOpen(!searchOpen)}
           >
             🔍
           </button>
-          <button className="nav-icon-btn">♡</button>
-          <button className="nav-icon-btn" onClick={() => setCartOpen(!cartOpen)}>
+          <button className="nav-icon-btn" aria-label="View wishlist">♡</button>
+          <button 
+            className="nav-icon-btn" 
+            aria-label={`Open cart${cartItems.length > 0 ? `, ${cartItems.length} item${cartItems.length > 1 ? 's' : ''}` : ''}`}
+            onClick={() => setCartOpen(!cartOpen)}
+          >
             🛍
-            {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
+            {cartItems.length > 0 && (
+              <span className="cart-badge" aria-hidden="true">{cartItems.length}</span>
+            )}
           </button>
           <button 
             className="hamburger"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
           </button>
         </div>
       </nav>
 
       {/* Search Bar */}
       {searchOpen && (
-        <div className="search-bar">
+        <div className="search-bar" role="search">
+          <label htmlFor="nav-search-input" className="sr-only">Search products</label>
           <input
-            type="text"
+            id="nav-search-input"
+            type="search"
             placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             autoFocus
             className="search-input"
+            aria-label="Search products"
           />
           <button 
             className="search-close"
+            aria-label="Close search"
             onClick={() => setSearchOpen(false)}
           >
             ✕

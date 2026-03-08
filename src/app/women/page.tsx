@@ -1,30 +1,48 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
-import CartDrawer from '@/components/product/CartDrawer';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import SkeletonCard from '@/components/ui/SkeletonCard';
 import { products } from '@/lib/dummy-data';
 import './women.css';
 
+
+/**
+ * WomenPage displays the Women's Collection with filterable product grid.
+ * Filters are memoized with useMemo to avoid unnecessary re-renders.
+ * Shows skeleton loaders while filtering for smooth UX.
+ *
+ * @component
+ * @example
+ * // Automatically rendered at /women route
+ * <WomenPage />
+ *
+ * @returns {JSX.Element} Women's collection page with filter buttons and product grid
+ */
 export default function WomenPage() {
   const { addToCart, setCartOpen } = useApp();
-  const [filteredProducts, setFilteredProducts] = useState(
-    products.filter(p => p.gender === 'women')
-  );
   const [activeFilter, setActiveFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const womenProducts = products.filter(p => p.gender === 'women');
+  const womenProducts = useMemo(() => {
+    return products.filter(p => p.gender === 'women');
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    if (activeFilter === 'all') {
+      return womenProducts;
+    } else {
+      return womenProducts.filter(p => p.type === activeFilter);
+    }
+  }, [activeFilter, womenProducts]);
 
   const handleFilter = (filter: string) => {
+    setIsLoading(true);
     setActiveFilter(filter);
-    if (filter === 'all') {
-      setFilteredProducts(womenProducts);
-    } else {
-      setFilteredProducts(
-        womenProducts.filter(p => p.type === filter)
-      );
-    }
+    // Simulate filtering delay for better UX
+    setTimeout(() => setIsLoading(false), 300);
   };
 
   const handleAddToCart = (product: typeof products[0]) => {
@@ -86,7 +104,13 @@ export default function WomenPage() {
 
           {/* Products Grid */}
           <div className="collection-grid">
-            {filteredProducts.length > 0 ? (
+            {isLoading ? (
+              <>
+                {[...Array(6)].map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))}
+              </>
+            ) : filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -100,8 +124,6 @@ export default function WomenPage() {
           </div>
         </div>
       </div>
-
-      <CartDrawer />
     </>
   );
 }

@@ -1,30 +1,48 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
-import CartDrawer from '@/components/product/CartDrawer';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import SkeletonCard from '@/components/ui/SkeletonCard';
 import { products } from '@/lib/dummy-data';
 import './men.css';
 
+
+/**
+ * MenPage displays the Men's Collection with filterable product grid.
+ * Filters are memoized with useMemo to avoid unnecessary re-renders.
+ * Shows skeleton loaders while filtering for smooth UX.
+ *
+ * @component
+ * @example
+ * // Automatically rendered at /men route
+ * <MenPage />
+ *
+ * @returns {JSX.Element} Men's collection page with filter buttons and product grid
+ */
 export default function MenPage() {
   const { addToCart, setCartOpen } = useApp();
-  const [filteredProducts, setFilteredProducts] = useState(
-    products.filter(p => p.gender === 'men')
-  );
   const [activeFilter, setActiveFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const menProducts = products.filter(p => p.gender === 'men');
+  const menProducts = useMemo(() => {
+    return products.filter(p => p.gender === 'men');
+  }, []);
+
+  const filteredProducts = useMemo(() => {
+    if (activeFilter === 'all') {
+      return menProducts;
+    } else {
+      return menProducts.filter(p => p.type === activeFilter);
+    }
+  }, [activeFilter, menProducts]);
 
   const handleFilter = (filter: string) => {
+    setIsLoading(true);
     setActiveFilter(filter);
-    if (filter === 'all') {
-      setFilteredProducts(menProducts);
-    } else {
-      setFilteredProducts(
-        menProducts.filter(p => p.type === filter)
-      );
-    }
+    // Simulate filtering delay for better UX
+    setTimeout(() => setIsLoading(false), 300);
   };
 
   const handleAddToCart = (product: typeof products[0]) => {
@@ -86,7 +104,13 @@ export default function MenPage() {
 
           {/* Products Grid */}
           <div className="collection-grid">
-            {filteredProducts.length > 0 ? (
+            {isLoading ? (
+              <>
+                {[...Array(6)].map((_, i) => (
+                  <SkeletonCard key={i} />
+                ))}
+              </>
+            ) : filteredProducts.length > 0 ? (
               filteredProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -100,8 +124,6 @@ export default function MenPage() {
           </div>
         </div>
       </div>
-
-      <CartDrawer />
     </>
   );
 }

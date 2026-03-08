@@ -1,6 +1,16 @@
 import Link from 'next/link';
 import './Hero.css';
 
+/**
+ * Hero section — the main above-the-fold landing area for the ZEEMRA home page.
+ * Displays the brand tagline, decorative SVG geometry, CTA buttons, and a stats bar.
+ *
+ * @component
+ * @example
+ * <Hero />
+ *
+ * @returns {JSX.Element} Full-viewport hero section with brand headline and statistics strip
+ */
 export default function Hero() {
   return (
     <>

@@ -9,6 +9,7 @@ interface CartItem {
   emoji: string;
   size?: string;
   color?: string;
+  quantity?: number;
 }
 
 interface AppContextType {
@@ -17,6 +18,7 @@ interface AppContextType {
   cartItems: CartItem[];
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -31,6 +33,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       emoji: '🧥',
       size: 'M',
       color: 'Cognac Brown',
+      quantity: 1,
     },
     {
       id: '2',
@@ -38,6 +41,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       price: 65,
       emoji: '👛',
       color: 'Dark Brown',
+      quantity: 1,
     },
   ]);
 
@@ -49,8 +53,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setCartItems(cartItems.filter(item => item.id !== id));
   };
 
+  const updateQuantity = (id: string, quantity: number) => {
+    if (quantity < 1) return;
+    setCartItems(cartItems.map(item => 
+      item.id === id ? { ...item, quantity: quantity } : item
+    ));
+  };
+
   return (
-    <AppContext.Provider value={{ cartOpen, setCartOpen, cartItems, addToCart, removeFromCart }}>
+    <AppContext.Provider value={{ cartOpen, setCartOpen, cartItems, addToCart, removeFromCart, updateQuantity }}>
       {children}
     </AppContext.Provider>
   );

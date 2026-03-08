@@ -9,6 +9,19 @@ interface ProductCardProps {
   onAddToCart?: (product: Product) => void;
 }
 
+/**
+ * ProductCard component displays a single product with image, details, and add-to-cart button.
+ * Features image error fallback with emoji, product badge, and wishlist stub button.
+ * 
+ * @component
+ * @example
+ * <ProductCard product={productData} onAddToCart={handleAddToCart} />
+ * 
+ * @param {ProductCardProps} props - Component props
+ * @param {Product} props.product - Product data object containing name, price, image URL, etc.
+ * @param {Function} [props.onAddToCart] - Callback function triggered when add to cart button is clicked
+ * @returns {JSX.Element} Product card UI with image, details, and action buttons
+ */
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
   const [imageError, setImageError] = useState(false);
   const productLink = `/product/${product.slug || product.id}`;

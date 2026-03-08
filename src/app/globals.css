@@ -155,4 +155,7 @@ body::after {
 /* ==============================
    PAGE-SPECIFIC SPACING
    ============================== */
-/* No global page wrapper needed - each page handles its own spacing */
+/* Home page top padding to account for fixed navbar + announcement bar */
+.home-page {
+  padding-top: var(--spacing-navbar-height, 100px);
+}
