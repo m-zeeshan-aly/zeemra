@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { AppProvider } from "@/lib/context";
 import CustomCursor from "@/components/ui/CustomCursor";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
 export const metadata = {
   title: "ZEEMRA - Crafted in Leather",
@@ -18,13 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppProvider>
-          <CustomCursor />
-          <AnnouncementBar />
-          <Navbar />
-          {children}
-          <Footer />
-        </AppProvider>
+        <ErrorBoundary>
+          <AppProvider>
+            <CustomCursor />
+            <AnnouncementBar />
+            <Navbar />
+            {children}
+            <Footer />
+          </AppProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

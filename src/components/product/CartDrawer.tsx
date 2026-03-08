@@ -3,10 +3,22 @@
 import { useApp } from '@/lib/context';
 import './CartDrawer.css';
 
+/**
+ * CartDrawer component displays a side drawer with shopping cart contents.
+ * Allows users to view items, adjust quantities, and proceed to checkout.
+ * Includes an overlay for closing and displays subtotal calculations.
+ * 
+ * @component
+ * @example
+ * <CartDrawer />
+ * 
+ * @returns {JSX.Element} Animated drawer UI with cart items and checkout options
+ */
 export default function CartDrawer() {
-  const { cartOpen, setCartOpen, cartItems } = useApp();
+  const { cartOpen, setCartOpen, cartItems, updateQuantity, removeFromCart } = useApp();
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>
@@ -19,7 +31,7 @@ export default function CartDrawer() {
       {/* Drawer */}
       <div className={`cart-drawer ${cartOpen ? 'open' : ''}`}>
         <div className="cart-header">
-          <h3 className="cart-title">Your Cart ({cartItems.length})</h3>
+          <h3 className="cart-title">Your Cart ({totalQuantity})</h3>
           <button className="cart-close" onClick={() => setCartOpen(false)}>
             ✕
           </button>
@@ -37,13 +49,31 @@ export default function CartDrawer() {
                   {item.color}
                 </p>
                 <div className="cart-item-qty">
-                  <button className="qty-btn">−</button>
-                  <span className="qty-num">1</span>
-                  <button className="qty-btn">+</button>
+                  <button 
+                    className="qty-btn" 
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                  >
+                    −
+                  </button>
+                  <span className="qty-num">{item.quantity}</span>
+                  <button 
+                    className="qty-btn" 
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  >
+                    +
+                  </button>
+                  <button 
+                    className="cart-item-remove"
+                    onClick={() => removeFromCart(item.id)}
+                    title="Remove from cart"
+                    aria-label={`Remove ${item.name} from cart`}
+                  >
+                    ✕
+                  </button>
                 </div>
               </div>
               <div>
-                <p className="cart-item-price">€{item.price}</p>
+                <p className="cart-item-price">€{item.price * item.quantity}</p>
               </div>
             </div>
           ))}

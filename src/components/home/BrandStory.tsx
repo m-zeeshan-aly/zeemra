@@ -3,6 +3,16 @@
 import Link from 'next/link';
 import './BrandStory.css';
 
+/**
+ * BrandStory section tells the ZEEMRA origin story about Sialkot leather craftsmanship.
+ * Displayed as a two-column layout with a visual placeholder and narrative text.
+ *
+ * @component
+ * @example
+ * <BrandStory />
+ *
+ * @returns {JSX.Element} Brand heritage section with visual and founders info
+ */
 export default function BrandStory() {
   return (
     <section className="story-section">

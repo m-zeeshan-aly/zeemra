@@ -1,6 +1,6 @@
 /* Hero Section */
 .hero {
-  height: calc(100vh - 72px - 38px);
+  height: 100vh;
   min-height: 600px;
   background: var(--night);
   position: relative;

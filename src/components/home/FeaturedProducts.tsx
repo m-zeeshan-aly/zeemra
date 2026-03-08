@@ -1,28 +1,56 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
 import { products } from '@/lib/dummy-data';
 import './FeaturedProducts.css';
 
+/**
+ * FeaturedProducts component displays a filterable grid of featured/bestselling products.
+ * Supports filtering by gender (men/women) and product type (jacket, wallet, etc).
+ * Uses memoization to optimize performance for expensive filter operations.
+ * 
+ * @component
+ * @example
+ * <FeaturedProducts />
+ * 
+ * @returns {JSX.Element} Featured products section with filter buttons and product grid
+ */
 export default function FeaturedProducts() {
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const { addToCart, setCartOpen } = useApp();
   const [activeFilter, setActiveFilter] = useState('all');
+
+  // Compute filtered products based on activeFilter
+  // This ensures single source of truth
+  const filteredProducts = useMemo(() => {
+    let result = [];
+    if (activeFilter === 'all') {
+      result = products;
+    } else if (activeFilter === 'men' || activeFilter === 'women') {
+      result = products.filter((p) => p.gender === activeFilter);
+    } else {
+      // Filter by type (jacket, wallet, shoe, belt, bag)
+      result = products.filter((p) => p.type === activeFilter);
+    }
+    
+    return result;
+  }, [activeFilter]);
 
   const handleFilter = (filter: string) => {
     setActiveFilter(filter);
-    if (filter === 'all') {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter(
-          (p) =>
-            p.gender === filter ||
-            p.type === filter ||
-            p.category.toLowerCase().includes(filter)
-        )
-      );
-    }
+  };
+
+  const handleAddToCart = (product: typeof products[0]) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      emoji: product.emoji,
+      size: 'M',
+      color: 'Default',
+    });
+    setCartOpen(true);
   };
 
   return (
@@ -75,7 +103,11 @@ export default function FeaturedProducts() {
 
       <div className="products-grid">
         {filteredProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard 
+            key={product.id} 
+            product={product}
+            onAddToCart={handleAddToCart}
+          />
         ))}
       </div>
     </section>

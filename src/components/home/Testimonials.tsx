@@ -34,6 +34,16 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+/**
+ * Testimonials section displays customer reviews from verified European purchasers.
+ * Renders a responsive grid of review cards with star ratings and author details.
+ *
+ * @component
+ * @example
+ * <Testimonials />
+ *
+ * @returns {JSX.Element} Customer testimonials grid section
+ */
 export default function Testimonials() {
   return (
     <section className="testimonials">

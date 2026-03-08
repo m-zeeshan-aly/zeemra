@@ -15,6 +15,7 @@ body {
   font-weight: 300;
   cursor: none;
   overflow-x: hidden;
+  padding-top: 0;
 }
 
 a {
@@ -149,4 +150,12 @@ body::after {
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ==============================
+   PAGE-SPECIFIC SPACING
+   ============================== */
+/* Home page top padding to account for fixed navbar + announcement bar */
+.home-page {
+  padding-top: var(--spacing-navbar-height, 100px);
 }
