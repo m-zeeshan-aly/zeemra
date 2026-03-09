@@ -17,7 +17,7 @@ beforeEach(() => {
 describe('Navbar', () => {
   it('renders correctly', () => {
     render(<Navbar />);
-    expect(screen.getByText('Women')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Women' })).toBeInTheDocument();
   });
 
   it('shows cart badge with correct item count', () => {

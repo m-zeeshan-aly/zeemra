@@ -29,7 +29,7 @@
   flex-direction: column;
 }
 
-.cart-overlay.open .cart-drawer {
+.cart-drawer.open {
   right: 0;
 }
 
@@ -171,6 +171,7 @@
 }
 
 .btn-checkout {
+  display: block;
   width: 100%;
   background: var(--cognac);
   color: var(--parchment);
@@ -184,6 +185,7 @@
   cursor: pointer;
   transition: background var(--transition);
   margin-bottom: 0.8rem;
+  text-align: center;
 }
 
 .btn-checkout:hover {

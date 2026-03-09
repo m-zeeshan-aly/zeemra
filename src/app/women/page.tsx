@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
 import SkeletonCard from '@/components/ui/SkeletonCard';
@@ -48,12 +49,12 @@ export default function WomenPage() {
       <div className="category-page">
         <div className="category-hero" style={{ background: 'linear-gradient(135deg, #4A2018, #1C1810)' }}>
           <div className="breadcrumb">
-            <a href="/">Home</a>
+            <Link href="/">Home</Link>
             <span className="sep">›</span>
             <span className="current">Women</span>
           </div>
           <div className="cat-hero-content">
-            <h1 className="cat-title">Women's Collection</h1>
+            <h1 className="cat-title">Women&apos;s Collection</h1>
             <p className="cat-subtitle">{womenProducts.length} Handcrafted Pieces · Sialkot, Pakistan</p>
             <div className="sub-cat-tabs" id="women-tabs">
               <button 

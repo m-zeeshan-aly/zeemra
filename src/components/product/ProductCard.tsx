@@ -55,7 +55,11 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
             className="product-wish" 
             onClick={(e) => {
               e.preventDefault();
-              isWished ? removeFromWishlist(product.id) : addToWishlist(product.id);
+              if (isWished) {
+                removeFromWishlist(product.id);
+              } else {
+                addToWishlist(product.id);
+              }
             }}
           >
             {isWished ? '❤️' : '♡'}

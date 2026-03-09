@@ -14,9 +14,13 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('AppContext — Cart Logic', () => {
-  it('initialises with 2 default cart items', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
+  it('initialises with an empty cart', () => {
     const { result } = renderHook(() => useApp(), { wrapper });
-    expect(result.current.cartItems).toHaveLength(2);
+    expect(result.current.cartItems).toHaveLength(0);
   });
 
   it('addToCart adds a new item to the cart', () => {
@@ -34,7 +38,7 @@ describe('AppContext — Cart Logic', () => {
       });
     });
 
-    expect(result.current.cartItems).toHaveLength(3);
+    expect(result.current.cartItems).toHaveLength(1);
     expect(result.current.cartItems.find((i) => i.id === 'test-1')).toBeTruthy();
   });
 
@@ -42,15 +46,39 @@ describe('AppContext — Cart Logic', () => {
     const { result } = renderHook(() => useApp(), { wrapper });
 
     act(() => {
+      result.current.addToCart({
+        id: '1',
+        name: 'Test Jacket',
+        price: 100,
+        emoji: '🧥',
+        size: 'M',
+        color: 'Brown',
+        quantity: 1,
+      });
+    });
+
+    act(() => {
       result.current.removeFromCart('1');
     });
 
     expect(result.current.cartItems.find((i) => i.id === '1')).toBeUndefined();
-    expect(result.current.cartItems).toHaveLength(1);
+    expect(result.current.cartItems).toHaveLength(0);
   });
 
   it('updateQuantity increases the quantity of an item', () => {
     const { result } = renderHook(() => useApp(), { wrapper });
+
+    act(() => {
+      result.current.addToCart({
+        id: '1',
+        name: 'Test Jacket',
+        price: 100,
+        emoji: '🧥',
+        size: 'M',
+        color: 'Brown',
+        quantity: 1,
+      });
+    });
 
     act(() => {
       result.current.updateQuantity('1', 5);
@@ -59,15 +87,26 @@ describe('AppContext — Cart Logic', () => {
     expect(result.current.cartItems.find((i) => i.id === '1')?.quantity).toBe(5);
   });
 
-  it('updateQuantity does nothing when quantity < 1', () => {
+  it('updateQuantity removes the item when quantity < 1', () => {
     const { result } = renderHook(() => useApp(), { wrapper });
 
     act(() => {
-      result.current.updateQuantity('1', 0); // Should be rejected
+      result.current.addToCart({
+        id: '1',
+        name: 'Test Jacket',
+        price: 100,
+        emoji: '🧥',
+        size: 'M',
+        color: 'Brown',
+        quantity: 1,
+      });
     });
 
-    // Quantity should remain 1 (original default)
-    expect(result.current.cartItems.find((i) => i.id === '1')?.quantity).toBe(1);
+    act(() => {
+      result.current.updateQuantity('1', 0);
+    });
+
+    expect(result.current.cartItems.find((i) => i.id === '1')).toBeUndefined();
   });
 
   it('cartOpen starts as false', () => {

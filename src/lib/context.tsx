@@ -20,6 +20,7 @@ interface AppContextType {
   addToCart: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
+  clearCart: () => void;
   wishedItems: string[];
   addToWishlist: (id: string) => void;
   removeFromWishlist: (id: string) => void;
@@ -29,37 +30,50 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
-  const [wishedItems, setWishedItems] = useState<string[]>([]);
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: '1',
-      name: 'Heritage Biker Jacket',
-      price: 289,
-      emoji: '🧥',
-      size: 'M',
-      color: 'Cognac Brown',
-      quantity: 1,
-    },
-    {
-      id: '2',
-      name: 'Slim Bifold Wallet',
-      price: 65,
-      emoji: '👛',
-      color: 'Dark Brown',
-      quantity: 1,
-    },
-  ]);
+  const [wishedItems, setWishedItems] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = window.localStorage.getItem('zeemra_wishlist');
+      if (!stored) return [];
+      const parsed = JSON.parse(stored);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  });
+
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = window.localStorage.getItem('zeemra_cart');
+      if (!stored) return [];
+
+      const parsed = JSON.parse(stored);
+      if (!Array.isArray(parsed)) return [];
+
+      const valid: CartItem[] = [];
+      for (const maybeItem of parsed) {
+        const res = CartItemSchema.safeParse(maybeItem);
+        if (!res.success) continue;
+        const quantity = typeof maybeItem?.quantity === 'number' ? maybeItem.quantity : 1;
+        if (!Number.isFinite(quantity) || quantity < 1) continue;
+        valid.push({ ...res.data, quantity });
+      }
+      return valid;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  });
 
   useEffect(() => {
     try {
-      const stored = window.localStorage.getItem('zeemra_wishlist');
-      if (stored) {
-        setWishedItems(JSON.parse(stored));
-      }
+      window.localStorage.setItem('zeemra_cart', JSON.stringify(cartItems));
     } catch (e) {
       console.error(e);
     }
-  }, []);
+  }, [cartItems]);
 
   const addToWishlist = (id: string) => {
     setWishedItems((prev) => {
@@ -86,27 +100,40 @@ export function AppProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    const exists = cartItems.find((ci) => ci.id === item.id);
-    if (exists) {
-      updateQuantity(item.id, exists.quantity + (item.quantity || 1));
-    } else {
-      setCartItems([...cartItems, { ...item, quantity: item.quantity || 1 }]);
-    }
+    setCartItems((prev) => {
+      const exists = prev.find((ci) => ci.id === item.id);
+      const addQty = item.quantity && item.quantity > 0 ? item.quantity : 1;
+      if (exists) {
+        return prev.map((ci) =>
+          ci.id === item.id ? { ...ci, quantity: ci.quantity + addQty } : ci
+        );
+      }
+      return [...prev, { ...item, quantity: addQty }];
+    });
   };
 
   const removeFromCart = (id: string) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
+    setCartItems((prev) => prev.filter(item => item.id !== id));
   };
 
   const updateQuantity = (id: string, quantity: number) => {
-    if (quantity < 1) return;
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: quantity } : item
-    ));
+    if (quantity < 1) {
+      setCartItems((prev) => prev.filter((item) => item.id !== id));
+      return;
+    }
+    setCartItems((prev) =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
   };
 
   return (
-    <AppContext.Provider value={{ cartOpen, setCartOpen, cartItems, addToCart, removeFromCart, updateQuantity, wishedItems, addToWishlist, removeFromWishlist }}>
+    <AppContext.Provider value={{ cartOpen, setCartOpen, cartItems, addToCart, removeFromCart, updateQuantity, clearCart, wishedItems, addToWishlist, removeFromWishlist }}>
       {children}
     </AppContext.Provider>
   );

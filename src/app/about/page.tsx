@@ -30,7 +30,7 @@ export default function AboutPage() {
       {/* Opening statement */}
       <div style={{ background: 'var(--parchment)', padding: '5rem 6rem', textAlign: 'center' }}>
         <p style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.3rem,3vw,2rem)', fontWeight: 300, fontStyle: 'italic', color: 'var(--sienna)', maxWidth: '700px', margin: '0 auto', lineHeight: 1.6 }}>
-          "We didn't set out to start a leather brand. We set out to give Sialkot — and its six hundred years of mastery — the name it always deserved."
+          &ldquo;We didn&apos;t set out to start a leather brand. We set out to give Sialkot — and its six hundred years of mastery — the name it always deserved.&rdquo;
         </p>
         <div style={{ width: '40px', height: '1px', background: 'var(--brass)', margin: '2rem auto' }}></div>
         <p style={{ fontSize: '0.6rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--oak)' }}>Zeeshan, Founder</p>
@@ -47,7 +47,7 @@ export default function AboutPage() {
           <div className="timeline-content">
             <p className="timeline-tag">The Beginning</p>
             <h3 className="timeline-heading">Sialkot Begins Its Leather Legacy</h3>
-            <p className="timeline-body">The city of Sialkot in present-day Pakistan establishes itself as a centre of artisanal leather craft under the Mughal empire. Craftsmen pass down techniques across generations — techniques that survive to this day in our atelier's work.</p>
+            <p className="timeline-body">The city of Sialkot in present-day Pakistan establishes itself as a centre of artisanal leather craft under the Mughal empire. Craftsmen pass down techniques across generations — techniques that survive to this day in our atelier&apos;s work.</p>
           </div>
         </div>
 
@@ -56,8 +56,8 @@ export default function AboutPage() {
           <div className="timeline-dot"></div>
           <div className="timeline-content">
             <p className="timeline-tag">Global Reach</p>
-            <h3 className="timeline-heading">Sialkot Supplies the World's Biggest Brands</h3>
-            <p className="timeline-body">Sialkot becomes the quiet manufacturer behind many of Europe's most recognisable leather labels. The craft is extraordinary, but the city's own name stays hidden on the label. Our founders' families are part of this ecosystem — and this frustration plants a seed.</p>
+            <h3 className="timeline-heading">Sialkot Supplies the World&apos;s Biggest Brands</h3>
+            <p className="timeline-body">Sialkot becomes the quiet manufacturer behind many of Europe&apos;s most recognisable leather labels. The craft is extraordinary, but the city&apos;s own name stays hidden on the label. Our founders&apos; families are part of this ecosystem — and this frustration plants a seed.</p>
           </div>
         </div>
 
@@ -77,7 +77,7 @@ export default function AboutPage() {
           <div className="timeline-content">
             <p className="timeline-tag">Building the Atelier</p>
             <h3 className="timeline-heading">The Workshop Opens Its Doors</h3>
-            <p className="timeline-body">ZEEMRA's dedicated atelier opens in Sialkot with a team of 12 master craftsmen, each with over 15 years of experience. We establish strict quality protocols: only full-grain hides, only hand-stitching with waxed linen thread, zero chrome tanning. Every piece must be approved before it ships.</p>
+            <p className="timeline-body">ZEEMRA&apos;s dedicated atelier opens in Sialkot with a team of 12 master craftsmen, each with over 15 years of experience. We establish strict quality protocols: only full-grain hides, only hand-stitching with waxed linen thread, zero chrome tanning. Every piece must be approved before it ships.</p>
           </div>
         </div>
 

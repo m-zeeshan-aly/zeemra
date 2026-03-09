@@ -7,6 +7,33 @@ import { useApp } from '@/lib/context';
 import CartDrawer from '../product/CartDrawer';
 import './Navbar.css';
 
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
+
+function CartIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  );
+}
+
+function HeartIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  );
+}
+
 /**
  * Navbar is the main fixed navigation bar for the ZEEMRA application.
  * Includes the brand logo, mega-menu navigation, search bar, wishlist, and cart icon.
@@ -19,7 +46,7 @@ import './Navbar.css';
  * @returns {JSX.Element} Sticky navigation bar with CartDrawer and search bar
  */
 export default function Navbar() {
-  const { cartOpen, setCartOpen, cartItems } = useApp();
+  const { setCartOpen, cartItems } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileMenOpen, setMobileMenOpen] = useState(false);
   const [mobileWomenOpen, setMobileWomenOpen] = useState(false);
@@ -28,6 +55,7 @@ export default function Navbar() {
   const [announcementHidden, setAnnouncementHidden] = useState(false);
 
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,6 +77,20 @@ export default function Navbar() {
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <>
@@ -141,29 +183,33 @@ export default function Navbar() {
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen(!searchOpen)}
           >
-            🔍
+            <SearchIcon />
           </button>
-          <button className="nav-icon-btn" aria-label="View wishlist">♡</button>
-          <button 
-            className="nav-icon-btn" 
-            aria-label={`Open cart${cartItems.length > 0 ? `, ${cartItems.length} item${cartItems.length > 1 ? 's' : ''}` : ''}`}
-            onClick={() => setCartOpen(!cartOpen)}
+          <button className="nav-icon-btn" aria-label="View wishlist">
+            <HeartIcon />
+          </button>
+          <Link
+            className="nav-icon-btn nav-cart-btn"
+            href="/cart"
+            aria-label={`Go to cart${cartCount > 0 ? `, ${cartCount} item${cartCount > 1 ? 's' : ''}` : ''}`}
+            onClick={() => setCartOpen(false)}
           >
-            🛍
-            {cartItems.length > 0 && (
-              <span className="cart-badge" aria-hidden="true">{cartItems.length}</span>
+            <CartIcon />
+            {cartCount > 0 && (
+              <span className="cart-badge" aria-hidden="true">{cartCount}</span>
             )}
-          </button>
+          </Link>
           <button 
-            className="hamburger"
+            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
+            type="button"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
+            <span className="hamburger-line" aria-hidden="true" />
+            <span className="hamburger-line" aria-hidden="true" />
+            <span className="hamburger-line" aria-hidden="true" />
           </button>
         </div>
       </nav>
@@ -187,10 +233,14 @@ export default function Navbar() {
           />
           <button 
             className="search-close"
+            type="button"
             aria-label="Close search"
             onClick={() => setSearchOpen(false)}
           >
-            ✕
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </button>
         </div>
       )}
@@ -204,6 +254,7 @@ export default function Navbar() {
         aria-hidden={!mobileMenuOpen}
       >
         <div 
+          id="mobile-menu"
           className="mobile-drawer" 
           onClick={(e) => e.stopPropagation()}
           role="dialog"
@@ -214,16 +265,20 @@ export default function Navbar() {
             <span className="mob-logo">ZEEM<span>R</span>A</span>
             <button 
               className="mob-close" 
+              type="button"
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Close mobile menu"
             >
-              ✕
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
             </button>
           </div>
 
           <div className="mob-search">
             <div className="mob-search-wrap">
-              <span style={{color:'var(--oak)', fontSize:'0.85rem'}}>🔍</span>
+              <SearchIcon className="mob-search-icon" />
               <input 
                 type="text" 
                 placeholder="Search leather jackets, wallets…" 
@@ -300,17 +355,19 @@ export default function Navbar() {
           <Link href="/about" className="mob-flat-link" onClick={() => setMobileMenuOpen(false)}>
             📖 &nbsp; Our Story
           </Link>
-          <button className="mob-flat-link" onClick={() => { setSearchOpen(true); setMobileMenuOpen(false); }}>
-            🔍 &nbsp; Search
+          <button className="mob-flat-link" type="button" onClick={() => { setSearchOpen(true); setMobileMenuOpen(false); }}>
+            <SearchIcon className="mob-flat-icon" /> &nbsp; Search
           </button>
-          <button className="mob-flat-link" onClick={() => { setCartOpen(true); setMobileMenuOpen(false); }}>
-            🛍 &nbsp; Cart ({cartItems.length})
+          <Link className="mob-flat-link" href="/cart" onClick={() => { setCartOpen(false); setMobileMenuOpen(false); }}>
+            <CartIcon className="mob-flat-icon" /> &nbsp; Cart ({cartCount})
+          </Link>
+          <button className="mob-flat-link" type="button">
+            <HeartIcon className="mob-flat-icon" /> &nbsp; Wishlist
           </button>
-          <button className="mob-flat-link">♡ &nbsp; Wishlist</button>
           <button className="mob-flat-link">📦 &nbsp; Track My Order</button>
 
           <div className="mob-footer">
-            <p className="mob-footer-tagline">"Where Heritage Meets Refinement"</p>
+            <p className="mob-footer-tagline">Where Heritage Meets Refinement</p>
             <div className="mob-socials">
               <span className="mob-social">in</span>
               <span className="mob-social">ig</span>

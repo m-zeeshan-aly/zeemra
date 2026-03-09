@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Product } from '@/types/product';
+import { useApp } from '@/lib/context';
 import styles from './ProductDetail.module.css';
 
 interface ProductInfoProps {
@@ -9,6 +10,7 @@ interface ProductInfoProps {
 }
 
 export default function ProductInfo({ product }: ProductInfoProps) {
+  const { addToCart, setCartOpen } = useApp();
   const [selectedColor, setSelectedColor] = useState(
     product.colorOptions?.[0] || null
   );
@@ -20,6 +22,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
   const [cartMessage, setCartMessage] = useState('');
 
   const handleAddToCart = () => {
+    if (!product.inStock) return;
+
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      emoji: product.emoji,
+      size: selectedSize?.size || undefined,
+      color: selectedColor?.name || undefined,
+      quantity,
+    });
+    setCartOpen(true);
     setCartMessage('Added to Cart ✓');
     setTimeout(() => setCartMessage(''), 2000);
   };
@@ -153,7 +167,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
       {/* CTA Buttons */}
       <div className={styles.ctaRow}>
-        <button className={styles.btnCart} onClick={handleAddToCart}>
+        <button
+          className={styles.btnCart}
+          onClick={handleAddToCart}
+          disabled={!product.inStock}
+          aria-disabled={!product.inStock}
+          title={!product.inStock ? 'Out of stock' : 'Add to cart'}
+        >
           <span>🛍</span> {cartMessage || 'Add to Cart'}
         </button>
         <button
@@ -164,7 +184,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
           {isWishlisted ? '♥' : '♡'}
         </button>
       </div>
-      <button className={styles.btnBuy}>⚡ Buy It Now</button>
+      <button className={styles.btnBuy} disabled={!product.inStock} aria-disabled={!product.inStock}>
+        ⚡ Buy It Now
+      </button>
 
       {/* Trust Badges */}
       <div className={styles.trustRow}>
