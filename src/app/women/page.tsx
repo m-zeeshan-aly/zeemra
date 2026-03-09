@@ -1,29 +1,53 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useApp } from '@/lib/context';
 import ProductCard from '@/components/product/ProductCard';
 import SkeletonCard from '@/components/ui/SkeletonCard';
 import { products } from '@/lib/dummy-data';
 import '@/styles/category.css';
 
+// Map query param values to internal filter keys
+const WOMEN_FILTER_MAP: Record<string, string> = {
+  bags: 'bag',
+  bag: 'bag',
+  jackets: 'jacket',
+  jacket: 'jacket',
+  wallets: 'wallet',
+  wallet: 'wallet',
+  shoes: 'shoe',
+  shoe: 'shoe',
+};
+
 export default function WomenPage() {
+  const searchParams = useSearchParams();
   const { addToCart, setCartOpen } = useApp();
   const [activeFilter, setActiveFilter] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
 
   // Derive products
   const womenProducts = useMemo(() => {
-    return products.filter(p => p.gender === 'women');
+    return products.filter((p) => p.gender === 'women');
   }, []);
+
+  // Apply initial filter from query param (?cat=...)
+  useEffect(() => {
+    const cat = searchParams.get('cat');
+    if (!cat) return;
+
+    const mapped = WOMEN_FILTER_MAP[cat.toLowerCase()];
+    if (!mapped) return;
+
+    setActiveFilter(mapped);
+  }, [searchParams]);
 
   const filteredProducts = useMemo(() => {
     if (activeFilter === 'all') {
       return womenProducts;
-    } else {
-      return womenProducts.filter(p => p.type === activeFilter);
     }
+    return womenProducts.filter((p) => p.type === activeFilter);
   }, [activeFilter, womenProducts]);
 
   const handleFilter = (filter: string) => {

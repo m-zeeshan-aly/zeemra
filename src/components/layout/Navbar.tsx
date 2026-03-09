@@ -104,28 +104,28 @@ export default function Navbar() {
             <Link href="/men">Men</Link>
             <div className="mega-menu">
               <span className="mega-col-title">Shop Men&apos;s Collection</span>
-              <Link href="/men?cat=jackets" className="mega-item">
+              <Link href="/men?cat=jacket" className="mega-item">
                 <div className="mega-item-icon">🧥</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Leather Jackets</span>
                   <span className="mega-item-count">24 products</span>
                 </div>
               </Link>
-              <Link href="/men?cat=wallets" className="mega-item">
+              <Link href="/men?cat=wallet" className="mega-item">
                 <div className="mega-item-icon">👛</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Wallets</span>
                   <span className="mega-item-count">18 products</span>
                 </div>
               </Link>
-              <Link href="/men?cat=belts" className="mega-item">
+              <Link href="/men?cat=belt" className="mega-item">
                 <div className="mega-item-icon">👔</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Belts</span>
                   <span className="mega-item-count">12 products</span>
                 </div>
               </Link>
-              <Link href="/men?cat=shoes" className="mega-item">
+              <Link href="/men?cat=shoe" className="mega-item">
                 <div className="mega-item-icon">👞</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Shoes</span>
@@ -139,28 +139,28 @@ export default function Navbar() {
             <Link href="/women">Women</Link>
             <div className="mega-menu">
               <span className="mega-col-title">Shop Women&apos;s Collection</span>
-              <Link href="/women?cat=bags" className="mega-item">
+              <Link href="/women?cat=bag" className="mega-item">
                 <div className="mega-item-icon">👜</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Leather Bags</span>
                   <span className="mega-item-count">28 products</span>
                 </div>
               </Link>
-              <Link href="/women?cat=jackets" className="mega-item">
+              <Link href="/women?cat=jacket" className="mega-item">
                 <div className="mega-item-icon">🧥</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Leather Jackets</span>
                   <span className="mega-item-count">16 products</span>
                 </div>
               </Link>
-              <Link href="/women?cat=wallets" className="mega-item">
+              <Link href="/women?cat=wallet" className="mega-item">
                 <div className="mega-item-icon">💼</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Wallets & Purses</span>
                   <span className="mega-item-count">22 products</span>
                 </div>
               </Link>
-              <Link href="/women?cat=shoes" className="mega-item">
+              <Link href="/women?cat=shoe" className="mega-item">
                 <div className="mega-item-icon">👠</div>
                 <div className="mega-item-text">
                   <span className="mega-item-name">Shoes</span>
@@ -304,16 +304,16 @@ export default function Navbar() {
               <span className="mob-cat-arrow">›</span>
             </button>
             <div className="mob-cat-body">
-              <Link href="/men?cat=jackets" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/men?cat=jacket" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 🧥 &nbsp; Leather Jackets
               </Link>
-              <Link href="/men?cat=wallets" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/men?cat=wallet" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 👛 &nbsp; Wallets
               </Link>
-              <Link href="/men?cat=belts" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/men?cat=belt" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 👔 &nbsp; Belts
               </Link>
-              <Link href="/men?cat=shoes" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/men?cat=shoe" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 👞 &nbsp; Shoes
               </Link>
               <Link href="/men" className="mob-sub-link" style={{color:'var(--brass)'}} onClick={() => setMobileMenuOpen(false)}>
@@ -333,16 +333,16 @@ export default function Navbar() {
               <span className="mob-cat-arrow">›</span>
             </button>
             <div className="mob-cat-body">
-              <Link href="/women?cat=bags" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/women?cat=bag" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 👜 &nbsp; Leather Bags
               </Link>
-              <Link href="/women?cat=jackets" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/women?cat=jacket" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 🧥 &nbsp; Jackets
               </Link>
-              <Link href="/women?cat=wallets" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/women?cat=wallet" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 💼 &nbsp; Wallets & Purses
               </Link>
-              <Link href="/women?cat=shoes" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/women?cat=shoe" className="mob-sub-link" onClick={() => setMobileMenuOpen(false)}>
                 👠 &nbsp; Shoes
               </Link>
               <Link href="/women" className="mob-sub-link" style={{color:'var(--brass)'}} onClick={() => setMobileMenuOpen(false)}>

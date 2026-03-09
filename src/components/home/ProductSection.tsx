@@ -76,15 +76,7 @@ export default function ProductSection({
 
   // Calculate pagination
   const itemsPerPage = ITEMS_PER_ROW;
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  
-  // Clamp current page
-  if (currentPage >= totalPages && totalPages > 0) {
-    const newPage = Math.max(0, totalPages - 1);
-    if (newPage !== currentPage) {
-      setTimeout(() => setCurrentPage(newPage), 0);
-    }
-  }
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage) || 1;
 
   // Get visible products
   const visibleProducts = useMemo(() => {
@@ -93,9 +85,10 @@ export default function ProductSection({
       return filteredProducts.slice(0, EXPANDED_ITEMS);
     }
     // Show 4 products (1 row) for current page
-    const start = currentPage * itemsPerPage;
+    const safePage = Math.min(currentPage, totalPages - 1);
+    const start = safePage * itemsPerPage;
     return filteredProducts.slice(start, start + itemsPerPage);
-  }, [filteredProducts, currentPage, isExpanded]);
+  }, [filteredProducts, currentPage, isExpanded, totalPages]);
 
   const handleAddToCart = (product: Product) => {
     addToCart({

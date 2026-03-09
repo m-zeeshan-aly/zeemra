@@ -30,44 +30,54 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
-  const [wishedItems, setWishedItems] = useState<string[]>(() => {
-    if (typeof window === 'undefined') return [];
+  const [wishedItems, setWishedItems] = useState<string[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  // Load wishlist only after mount to avoid SSR/client mismatch
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
     try {
       const stored = window.localStorage.getItem('zeemra_wishlist');
-      if (!stored) return [];
+      if (!stored) return;
       const parsed = JSON.parse(stored);
-      return Array.isArray(parsed) ? parsed : [];
+      if (Array.isArray(parsed)) {
+        setWishedItems(parsed);
+      }
     } catch (e) {
       console.error(e);
-      return [];
     }
-  });
+  }, []);
 
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    if (typeof window === 'undefined') return [];
+  // Load cart only after mount to avoid SSR/client mismatch
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
     try {
       const stored = window.localStorage.getItem('zeemra_cart');
-      if (!stored) return [];
+      if (!stored) return;
 
       const parsed = JSON.parse(stored);
-      if (!Array.isArray(parsed)) return [];
+      if (!Array.isArray(parsed)) return;
 
       const valid: CartItem[] = [];
       for (const maybeItem of parsed) {
         const res = CartItemSchema.safeParse(maybeItem);
         if (!res.success) continue;
-        const quantity = typeof maybeItem?.quantity === 'number' ? maybeItem.quantity : 1;
+        const quantity =
+          typeof maybeItem?.quantity === 'number' ? maybeItem.quantity : 1;
         if (!Number.isFinite(quantity) || quantity < 1) continue;
         valid.push({ ...res.data, quantity });
       }
-      return valid;
+      if (valid.length) {
+        setCartItems(valid);
+      }
     } catch (e) {
       console.error(e);
-      return [];
     }
-  });
+  }, []);
 
+  // Persist cart whenever it changes
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     try {
       window.localStorage.setItem('zeemra_cart', JSON.stringify(cartItems));
     } catch (e) {
